@@ -49,7 +49,7 @@ public class KillEvents {
         }
 
         if (stageId >= 6 && SoulCombatStatus.isMarkedBy(mob, player, now)) {
-            player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 60, 0));
+            player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 100, 1));
             SoulData.addSoul(stack);
         }
 

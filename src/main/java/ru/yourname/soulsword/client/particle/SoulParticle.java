@@ -14,7 +14,9 @@ public class SoulParticle extends Particle {
                         TextureAtlasSprite sprite, float scale, int maxAge) {
         super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn);
         if (sprite != null) {
-            setParticleTexture(sprite);
+            this.particleTexture = sprite;
+        } else {
+            setParticleTextureIndex(0);
         }
         this.particleScale = scale;
         this.particleMaxAge = maxAge;

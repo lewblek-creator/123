@@ -33,8 +33,8 @@ public class SoulParticleSpawner {
         }
     }
 
-    public static void spawnSoulWave(EntityPlayer player, double range) {
-        TextureAtlasSprite sprite = SoulParticleRegistry.getSoulWaveSprite();
+    public static void spawnSoulWave(EntityPlayer player, int stageId, double range) {
+        TextureAtlasSprite sprite = SoulParticleRegistry.getWaveSprite(stageId);
         if (sprite == null) return;
         World world = player.world;
 
@@ -48,8 +48,8 @@ public class SoulParticleSpawner {
         }
     }
 
-    public static void spawnSoulRend(EntityPlayer player, double range) {
-        TextureAtlasSprite sprite = SoulParticleRegistry.getSoulWaveSprite();
+    public static void spawnSoulRend(EntityPlayer player, int stageId, double range) {
+        TextureAtlasSprite sprite = SoulParticleRegistry.getWaveSprite(stageId);
         if (sprite == null) return;
         World world = player.world;
 
@@ -83,5 +83,22 @@ public class SoulParticleSpawner {
         Minecraft mc = Minecraft.getMinecraft();
         if (mc.world == null) return;
         mc.effectRenderer.addEffect(new SoulParticle(world, x, y, z, vx, vy, vz, sprite, scale, maxAge));
+    }
+
+    public static void spawnBloodShield(EntityPlayer player) {
+        TextureAtlasSprite sprite = SoulParticleRegistry.getBloodShieldSprite();
+        if (sprite == null) return;
+        World world = player.world;
+        long now = world.getTotalWorldTime();
+        double baseAngle = (now % 360) * (Math.PI / 180.0);
+        double radius = 0.9;
+        double y = player.posY + 1.0;
+
+        for (int i = 0; i < 3; i++) {
+            double angle = baseAngle + i * (Math.PI * 2 / 3);
+            double x = player.posX + Math.cos(angle) * radius;
+            double z = player.posZ + Math.sin(angle) * radius;
+            spawnParticle(world, x, y, z, 0, 0, 0, sprite, 0.7f, 12);
+        }
     }
 }

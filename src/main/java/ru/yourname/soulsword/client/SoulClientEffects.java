@@ -54,7 +54,7 @@ public class SoulClientEffects {
         }
 
         if (stage.hasSoulWavePassive()) {
-            SoulParticleSpawner.spawnSoulWave(player, 4.5D);
+            SoulParticleSpawner.spawnSoulWave(player, stageId, 4.5D);
         }
     }
 
@@ -72,7 +72,7 @@ public class SoulClientEffects {
         if (player.isSneaking()) return;
         if (player.getCooledAttackStrength(0.5f) < 1.0f) return;
 
-        SoulParticleSpawner.spawnSoulWave(player, 4.5D);
+        SoulParticleSpawner.spawnSoulWave(player, stageId, 4.5D);
         if (stageId >= 7) {
             SoulParticleSpawner.spawnFearAura(player);
         }
@@ -92,7 +92,7 @@ public class SoulClientEffects {
 
         int usedTicks = stack.getMaxItemUseDuration() - event.getDuration();
         if (usedTicks >= 24) {
-            SoulParticleSpawner.spawnSoulRend(player, 10.0D);
+            SoulParticleSpawner.spawnSoulRend(player, stageId, 10.0D);
         }
     }
 
@@ -108,6 +108,8 @@ public class SoulClientEffects {
 
         tickEffects(mc, BLEEDING, now, true);
         tickEffects(mc, MARKED, now, false);
+
+        spawnBloodShield(mc);
     }
 
     private static void tickEffects(Minecraft mc, Map<Integer, Long> map, long now, boolean bleed) {
@@ -131,5 +133,15 @@ public class SoulClientEffects {
                 SoulParticleSpawner.spawnMark(target);
             }
         }
+    }
+
+    private static void spawnBloodShield(Minecraft mc) {
+        EntityPlayer player = mc.player;
+        if (player == null) return;
+        ItemStack stack = player.getHeldItemMainhand();
+        if (stack.isEmpty() || !(stack.getItem() instanceof ItemSoulSword)) return;
+        int stageId = SoulData.getAwakeningStageId(stack);
+        if (stageId < 4) return;
+        SoulParticleSpawner.spawnBloodShield(player);
     }
 }
