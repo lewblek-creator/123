@@ -28,7 +28,7 @@ public class SoulWaveKeyHandler {
                 if (!stack.isEmpty() && stack.getItem() instanceof ItemSoulSword) {
                     int stageId = SoulData.getAwakeningStageId(stack);
                     if (stageId >= 5) {
-                        SoulParticleSpawner.spawnSoulWave(player, 4.5D);
+                        SoulParticleSpawner.spawnSoulWave(player, stageId, 4.5D);
                         if (stageId >= 7) {
                             SoulParticleSpawner.spawnFearAura(player);
                         }
